@@ -1,0 +1,31 @@
+{
+  "name": "crypto-portfolio-manager",
+  "version": "1.0.0",
+  "description": "Tool for crypto asset management",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samhess/crypto-portfolio-manager.git"
+  },
+  "author": "Samuel Hess",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samhess/crypto-portfolio-manager/issues"
+  },
+  "homepage": "https://github.com/samhess/crypto-portfolio-manager#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "chart.js": "^2.8.0",
+    "datatables": "^1.10.18",
+    "express": "^4.16.4",
+    "feather-icons": "^4.21.0",
+    "jquery": "^3.3.1",
+    "jszip": "^3.2.1",
+    "moment": "^2.24.0",
+    "pdfmake": "^0.1.54",
+    "popper.js": "^1.15.0"
+  }
+}

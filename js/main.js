@@ -144,42 +144,29 @@ function analyzePortfolio() {
             console.warn('Warning: we have no data for ' + key + '. Coin will be ignored for calculations!')
         }
     }
-    console.log('Portfolio value is ' + portfolio_value)
     for (var key in coins) {
         coins[key].portfolio_share = Number((100 * coins[key].value / portfolio_value).toFixed(2));
         var relweight = coins[key].portfolio_share / coins[key].market_share;
-        if (coins[key].amount == 0) { coins[key].weight =  'not present'}
-        else {
-        coins[key].weight = (100*relweight).toFixed(0)
+        if (coins[key].amount == 0) { 
+            coins[key].weight =  'not present'
+        } else {
+            coins[key].weight = (100*relweight).toFixed(0)
         }
-            //else if (relweight < -1) { coins[key].weight =  'under'}
-            // else if (relweight <= 1) { coins[key].weight =  'market'}
-            // else if (relweight > 1) { coins[key].weight =  'over'}  
     }
     coins.sort(function (a, b) {
         return a.rank - b.rank;
     });
     // console.log(coins)
     var pv = portfolio_value.toLocaleString('de-CH',  { style: 'currency', currency: currency })
+    // console.log('Portfolio value is ' + pv)
     var pvBTC = (portfolio_value / coinList["BTC"].quotes.USD.price).toFixed(2)
     $("#portfolioValue").html(pv + ' | ' +  pvBTC + ' BTC');
     var m2pRatio = total_market_cap / portfolio_value;
     m2pRatio = m2pRatio.toLocaleString('de-CH',  { style : 'decimal', maximumFractionDigits : 0 });
     $("#m2pRatio").html(m2pRatio);
-    $('#analysis').empty(); 
     for (var key in coins) {
         var coin = coins[key];
-        var tclass = (coin.amount == 0) ? 'table-dark' : '';
-        var wcolor = (coin.weight <= 100) ? 'green' : 'red';
         datatable.row.add([coin.rank, coin.amount, coin.name + ' (' + coin.symbol + ')', coin.portfolio_share, coin.market_share, coin.weight]);
-        $('#analysis').append('<tr class=' + tclass + '><th scope="row">' + coin.rank + '</th><td width=15%>' 
-            + coin.amount + '</td><td>' 
-            + coin.name + ' (' + coin.symbol + ')</td><td>' 
-            + coin.portfolio_share + ' %</td><td>'
-            + coin.market_share + ' %</td><td style="color:' + wcolor + ';">' 
-            // + coin.price  + ' ' + currency + '</td><td>'
-            // + coin.value  + ' ' + currency + '</td><td style="color:' + wcolor + ';">'
-            + coin.weight  + '%</td></tr>');
     }
     datatable.columns.adjust();
     datatable.draw();
