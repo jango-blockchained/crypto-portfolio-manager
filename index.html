@@ -1,0 +1,96 @@
+<html>
+<head>
+    <title>Crypto Portfolio Manager</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.0/css/select.bootstrap4.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        html{font-size:14px}
+        @media(min-width:768px){
+            html{font-size:16px}
+        }
+    </style>
+</head>
+<body>
+    <!-- top navigation bar -->
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Crypto Portfolio Manager</a>
+        Create, manage, track and analyse crypto assets!
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#"></a>
+            </li>
+        </ul>
+    </nav>
+    <div id="app" class="container-fluid">
+        <div class="row"> 
+            <!-- left sidebar navigation -->
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <Navigation></Navigation> <!-- vue component -->
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Infos</span>
+                    </h6>
+                    <Infobox id="marketcap" name="Market Capitalisation" value="0"></Infobox> <!-- vue component -->
+                    <Infobox id="portfolioValue" name="Portfolio Value" value="0"></Infobox> <!-- vue component -->
+                    <Infobox id="m2pRatio" name="Market-to-Portfolio Ratio" value="0"></Infobox> <!-- vue component -->
+                </div>
+            </nav>
+            <!-- main content -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <!-- page heading and toolbar -->
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">{{currentPageName}}</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <select class="btn btn-sm btn-outline-secondary" id="currency">
+                            <option>USD</option>
+                            <option>CHF</option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" >
+                        <Datatable id="tableOverview"></Datatable> <!-- vue component -->
+                    </div>
+                    <div class="tab-pane fade" id="nav-definition" role="tabpanel" >
+                        <Datatable id="tablePortfolio"></Datatable> <!-- vue component -->
+                    </div>
+                    <div class="tab-pane fade" id="nav-analysis" role="tabpanel" >
+                        <Datatable id="tableAnalysis"></Datatable> <!-- vue component -->
+                    </div>
+                    <div class="tab-pane fade" id="nav-performance" role="tabpanel" >
+                        <Performanceanalysis></Performanceanalysis> <!-- vue component -->
+                    </div>
+                </div>
+            </main>
+            <!-- modal dialog -->
+            <Modal></Modal> <!-- vue component -->
+        </div>
+    </div>
+
+    <!-- jQuery,Popper.js and Bootstrap JS, -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script> <!-- column visibility button -->
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script> <!-- export button -->
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> <!-- print button -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script> <!-- required HTML5 export buttons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script> <!-- required HTML5 export buttons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script> <!-- required by pdfmake -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="components.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

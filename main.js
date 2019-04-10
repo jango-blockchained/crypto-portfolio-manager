@@ -1,13 +1,21 @@
 var app = new Vue({
     el: '#app',
     data: {
-        title: "Crypto Asset Manager"
+        title: "Crypto Portfolio Manager",
+        pageNames: {
+            1: "Market Overview",
+            2: "Portfolio",
+            3: "Portfolio Analysis",
+            4: "Performance Analysis"
+        },
+        currentPageName: "Market Overview"
     }
 });
 
+
 var currency = 'USD';
 var locale = 'de-CH';
-var coinListLimit = 200;
+var coinListLimit = 100;
 var coinList = {}; // associative array which is an object in Javascript
 var sortableCoinList = []; // sortable array
 var total_market_cap = 0;
@@ -102,7 +110,7 @@ function definePortfolio() {
             coin.name = coinList[key].name
             coin.market_cap = coinList[key].quotes[currency].market_cap
         } else {
-            console.log('Warning: ' + key + ' not in CMC coin list')
+            console.warn('Warning: Unknown coin. ' + key + ' is not amongst top ' + coinListLimit + ' coins on CMC')
             coin.rank = null
             coin.name = 'unknown'
             coin.market_cap = 0
@@ -133,7 +141,7 @@ function analyzePortfolio() {
             portfolio_value += coin.value;
             coins.push(coin);
         } else {
-            console.log(key + ' not in coinList: will be ignored!')
+            console.warn('Warning: we have no data for ' + key + '. Coin will be ignored for calculations!')
         }
     }
     console.log('Portfolio value is ' + portfolio_value)
@@ -519,4 +527,5 @@ $(document).ready(function () {
     $('startDate').valueAsDate = new Date()
     $("#portfolioInfo").hide();
     getMarketInfo();
+    feather.replace();
 });
